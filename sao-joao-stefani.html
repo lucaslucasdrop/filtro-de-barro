@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtros São João – Stéfani | Filtro de Barro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --terracota: #C4572A;
+            --terracota-escuro: #9A3F1C;
+            --areia: #F6EFE6;
+            --off-white: #FFFCF8;
+            --grafite: #2B2420;
+            --cinza: #6E625A;
+            --verde: #3F7A4A;
+            --borda: #E8DDD1;
+            --branco: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            color: var(--grafite);
+            background-color: var(--off-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Fraunces', serif;
+            font-weight: 600;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Barra de aviso */
+        .announcement-bar {
+            background-color: var(--terracota-escuro);
+            color: var(--branco);
+            text-align: center;
+            padding: 10px 16px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* Cabeçalho */
+        .header {
+            background-color: var(--off-white);
+            border-bottom: 1px solid var(--borda);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            gap: 24px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-desktop {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-desktop a {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--grafite);
+            transition: color 0.2s;
+        }
+
+        .nav-desktop a:hover {
+            color: var(--terracota);
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--grafite);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .header-icon:hover {
+            color: var(--terracota);
+        }
+
+        .header-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 1.5;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -8px;
+            background-color: var(--terracota);
+            color: var(--branco);
+            font-size: 11px;
+            font-weight: 600;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .menu-toggle svg {
+            width: 24px;
+            height: 24px;
+            color: var(--grafite);
+        }
+
+        /* Menu mobile */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100%;
+            background-color: var(--off-white);
+            z-index: 200;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            box-shadow: 2px 0 16px rgba(0,0,0,0.1);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        .mobile-menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .mobile-menu-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .mobile-menu-close svg {
+            width: 24px;
+            height: 24px;
+            color: var(--grafite);
+        }
+
+        .mobile-menu-nav {
+            padding: 20px;
+        }
+
+        .mobile-menu-nav a {
+            display: block;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--grafite);
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .mobile-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 150;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .mobile-overlay.active {
+            opacity: 1;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 20px 0;
+            font-size: 13px;
+            color: var(--cinza);
+        }
+
+        .breadcrumb a {
+            color: var(--cinza);
+            transition: color 0.2s;
+        }
+
+        .breadcrumb a:hover {
+            color: var(--terracota);
+        }
+
+        .breadcrumb span {
+            margin: 0 8px;
+        }
+
+        /* Topo da categoria */
+        .category-hero {
+            background-color: var(--areia);
+            padding: 48px 0;
+            margin-bottom: 32px;
+        }
+
+        .category-hero-inner {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .category-hero-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: var(--terracota);
+            margin-bottom: 12px;
+        }
+
+        .category-hero h1 {
+            font-size: 40px;
+            line-height: 1.2;
+            color: var(--grafite);
+            margin-bottom: 16px;
+        }
+
+        .category-hero-text {
+            font-size: 16px;
+            color: var(--cinza);
+            margin-bottom: 24px;
+            max-width: 480px;
+        }
+
+        .category-hero-stats {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+            color: var(--grafite);
+            font-weight: 500;
+        }
+
+        .category-hero-stats span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .category-hero-stats .divider {
+            width: 1px;
+            height: 16px;
+            background-color: var(--borda);
+        }
+
+        .category-hero-stats .frete {
+            color: var(--verde);
+        }
+
+        .category-hero-image {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .category-hero-image img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+
+        /* Atalhos das coleções */
+        .collection-pills {
+            padding: 0 0 32px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .collection-pills::-webkit-scrollbar {
+            display: none;
+        }
+
+        .collection-pills-inner {
+            display: flex;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+
+        .pill {
+            flex-shrink: 0;
+            padding: 10px 20px;
+            border: 1px solid var(--borda);
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--grafite);
+            background-color: var(--off-white);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .pill:hover {
+            border-color: var(--terracota);
+            color: var(--terracota);
+        }
+
+        .pill.active {
+            background-color: var(--terracota);
+            border-color: var(--terracota);
+            color: var(--branco);
+        }
+
+        /* Área principal */
+        .main-content {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 40px;
+            padding-bottom: 80px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            margin-bottom: 32px;
+        }
+
+        .sidebar-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--grafite);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+        }
+
+        .sidebar select {
+            width: 100%;
+            padding: 12px 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--grafite);
+            background-color: var(--off-white);
+            border: 1px solid var(--borda);
+            border-radius: 6px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236E625A' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+        }
+
+        .sidebar select:focus {
+            outline: none;
+            border-color: var(--terracota);
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--terracota);
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            font-size: 14px;
+            color: var(--grafite);
+            cursor: pointer;
+        }
+
+        .sidebar-brand {
+            font-size: 14px;
+            color: var(--cinza);
+        }
+
+        .clear-filters {
+            background: none;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--terracota);
+            cursor: pointer;
+            padding: 0;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .clear-filters:hover {
+            color: var(--terracota-escuro);
+        }
+
+        /* Grade de produtos */
+        .products-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .products-count {
+            font-size: 14px;
+            color: var(--cinza);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .product-card {
+            display: block;
+            background-color: var(--off-white);
+            border: 1px solid var(--borda);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 4px 20px rgba(43, 36, 32, 0.08);
+        }
+
+        .product-card-image {
+            position: relative;
+            background-color: var(--areia);
+            padding: 24px;
+            overflow: hidden;
+        }
+
+        .product-card-image img {
+            width: 100%;
+            aspect-ratio: 4 / 5;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-card-image img {
+            transform: scale(1.03);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            padding: 6px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 4px;
+            background-color: var(--grafite);
+            color: var(--branco);
+        }
+
+        .product-badge.special {
+            background-color: var(--terracota);
+        }
+
+        .product-card-content {
+            padding: 20px;
+        }
+
+        .product-card-title {
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--grafite);
+            margin-bottom: 8px;
+        }
+
+        .product-card-description {
+            font-size: 14px;
+            color: var(--cinza);
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .product-card-sizes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 16px;
+        }
+
+        .size-tag {
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--cinza);
+            border: 1px solid var(--borda);
+            border-radius: 4px;
+        }
+
+        .product-card-price {
+            margin-bottom: 12px;
+        }
+
+        .price-label {
+            font-size: 12px;
+            color: var(--cinza);
+        }
+
+        .price-value {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--terracota);
+        }
+
+        .product-card-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--terracota);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .product-card:hover .product-card-link {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            color: var(--cinza);
+            margin-bottom: 20px;
+        }
+
+        .empty-state button {
+            background: none;
+            border: 1px solid var(--terracota);
+            padding: 12px 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--terracota);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .empty-state button:hover {
+            background-color: var(--terracota);
+            color: var(--branco);
+        }
+
+        /* Guia de tamanhos */
+        .size-guide {
+            background-color: var(--areia);
+            padding: 48px 0;
+            margin-top: 80px;
+        }
+
+        .size-guide h2 {
+            font-size: 28px;
+            margin-bottom: 32px;
+            color: var(--grafite);
+        }
+
+        .size-table {
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+        }
+
+        .size-table tr {
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .size-table td {
+            padding: 16px 0;
+            font-size: 15px;
+        }
+
+        .size-table td:first-child {
+            font-weight: 600;
+            color: var(--grafite);
+            width: 140px;
+        }
+
+        .size-table td:last-child {
+            color: var(--cinza);
+        }
+
+        .size-guide-help {
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--cinza);
+        }
+
+        .size-guide-help a {
+            color: var(--terracota);
+            font-weight: 500;
+        }
+
+        .size-guide-help a:hover {
+            text-decoration: underline;
+        }
+
+        /* Faixa de confiança */
+        .trust-bar {
+            padding: 48px 0;
+            border-top: 1px solid var(--borda);
+            border-bottom: 1px solid var(--borda);
+        }
+
+        .trust-bar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            padding: 0 16px;
+        }
+
+        .trust-item:not(:last-child) {
+            border-right: 1px solid var(--borda);
+        }
+
+        .trust-item svg {
+            width: 24px;
+            height: 24px;
+            color: var(--terracota);
+            flex-shrink: 0;
+        }
+
+        .trust-item-text strong {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--grafite);
+        }
+
+        .trust-item-text span {
+            font-size: 13px;
+            color: var(--cinza);
+        }
+
+        /* Newsletter */
+        .newsletter {
+            background-color: var(--terracota-escuro);
+            padding: 48px 0;
+        }
+
+        .newsletter-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .newsletter-text h3 {
+            font-size: 24px;
+            color: var(--branco);
+            margin-bottom: 8px;
+        }
+
+        .newsletter-text p {
+            font-size: 15px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .newsletter-form input {
+            width: 280px;
+            padding: 14px 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            border: none;
+            border-radius: 6px;
+            background-color: rgba(255,255,255,0.1);
+            color: var(--branco);
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            background-color: rgba(255,255,255,0.15);
+        }
+
+        .newsletter-form button {
+            padding: 14px 28px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            background-color: var(--branco);
+            color: var(--terracota);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--areia);
+        }
+
+        /* Rodapé */
+        .footer {
+            background-color: var(--grafite);
+            padding: 64px 0 32px;
+            color: var(--areia);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+
+        .footer-logo img {
+            height: 36px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 16px;
+        }
+
+        .footer-logo p {
+            font-size: 14px;
+            color: rgba(246, 239, 230, 0.7);
+            line-height: 1.6;
+        }
+
+        .footer-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 20px;
+            color: var(--areia);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            font-size: 14px;
+            color: rgba(246, 239, 230, 0.7);
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--areia);
+        }
+
+        .footer-contact a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-contact svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .payment-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 26px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(246, 239, 230, 0.7);
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid rgba(246, 239, 230, 0.1);
+            text-align: center;
+            font-size: 13px;
+            color: rgba(246, 239, 230, 0.5);
+        }
+
+        /* WhatsApp flutuante */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background-color: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 90;
+            transition: transform 0.2s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.05);
+        }
+
+        .whatsapp-float svg {
+            width: 28px;
+            height: 28px;
+            color: var(--branco);
+        }
+
+        /* Cookies */
+        .cookie-notice {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--grafite);
+            padding: 16px;
+            z-index: 100;
+            display: none;
+        }
+
+        .cookie-notice.show {
+            display: block;
+        }
+
+        .cookie-notice-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            max-width: 1240px;
+            margin: 0 auto;
+        }
+
+        .cookie-notice p {
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .cookie-notice button {
+            padding: 10px 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            background-color: var(--branco);
+            color: var(--grafite);
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Mobile filter panel */
+        .mobile-filter-btn {
+            display: none;
+            width: 100%;
+            padding: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            background-color: var(--off-white);
+            border: 1px solid var(--borda);
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 24px;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mobile-filter-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .filter-panel {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--off-white);
+            border-radius: 16px 16px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            z-index: 200;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .filter-panel.active {
+            transform: translateY(0);
+        }
+
+        .filter-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            border-bottom: 1px solid var(--borda);
+            position: sticky;
+            top: 0;
+            background-color: var(--off-white);
+        }
+
+        .filter-panel-header h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .filter-panel-close {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .filter-panel-close svg {
+            width: 24px;
+            height: 24px;
+            color: var(--grafite);
+        }
+
+        .filter-panel-content {
+            padding: 24px 20px;
+        }
+
+        .filter-panel-actions {
+            padding: 20px;
+            border-top: 1px solid var(--borda);
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-panel-actions button {
+            flex: 1;
+            padding: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .filter-panel-actions .btn-clear {
+            background: none;
+            border: 1px solid var(--borda);
+            color: var(--grafite);
+        }
+
+        .filter-panel-actions .btn-apply {
+            background-color: var(--terracota);
+            border: none;
+            color: var(--branco);
+        }
+
+        /* Responsivo */
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-desktop {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .category-hero-inner {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .category-hero-image {
+                order: -1;
+            }
+
+            .category-hero h1 {
+                font-size: 32px;
+            }
+
+            .category-hero-stats {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .mobile-filter-btn {
+                display: flex;
+            }
+
+            .filter-panel {
+                display: block;
+            }
+
+            .trust-bar-inner {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 24px;
+            }
+
+            .trust-item {
+                padding: 0;
+            }
+
+            .trust-item:not(:last-child) {
+                border-right: none;
+            }
+
+            .newsletter-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .newsletter-form input {
+                width: 100%;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .size-guide {
+                margin-top: 56px;
+                padding: 40px 0;
+            }
+
+            .size-guide h2 {
+                font-size: 24px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-card-title {
+                font-size: 16px;
+            }
+
+            .cookie-notice-inner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .whatsapp-float {
+                bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de aviso -->
+    <div class="announcement-bar">
+        Frete grátis para todo o Estado de SP · Revendedor autorizado Cerâmica Stéfani
+    </div>
+
+    <!-- Cabeçalho -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <button class="menu-toggle" onclick="toggleMobileMenu()">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+
+                <a href="https://www.filtrodebarro.com/" class="logo">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/themes/common/logo-2007118023-1588553096-2655ab607493ce340c375307e2c3ae891588553096-480-0.webp" alt="Filtro de Barro">
+                </a>
+
+                <nav class="nav-desktop">
+                    <a href="https://www.filtrodebarro.com/">Início</a>
+                    <a href="https://www.filtrodebarro.com/produtos/">Produtos</a>
+                    <a href="https://www.filtrodebarro.com/contato/">Contato</a>
+                </nav>
+
+                <div class="header-icons">
+                    <button class="header-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
+                        </svg>
+                    </button>
+                    <button class="header-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                        </svg>
+                    </button>
+                    <a href="#" class="header-icon cart-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/>
+                        </svg>
+                        <span class="cart-count">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu mobile -->
+    <div class="mobile-overlay" onclick="toggleMobileMenu()"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/themes/common/logo-2007118023-1588553096-2655ab607493ce340c375307e2c3ae891588553096-480-0.webp" alt="Filtro de Barro" style="height: 32px;">
+            <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="mobile-menu-nav">
+            <a href="https://www.filtrodebarro.com/">Início</a>
+            <a href="https://www.filtrodebarro.com/produtos/">Produtos</a>
+            <a href="https://www.filtrodebarro.com/contato/">Contato</a>
+        </nav>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="https://www.filtrodebarro.com/">Início</a>
+            <span>›</span>
+            <a href="https://www.filtrodebarro.com/filtros/">Filtros</a>
+            <span>›</span>
+            São João – Stéfani
+        </nav>
+    </div>
+
+    <!-- Topo da categoria -->
+    <section class="category-hero">
+        <div class="container">
+            <div class="category-hero-inner">
+                <div class="category-hero-content">
+                    <span class="category-hero-badge">CERÂMICA STÉFANI</span>
+                    <h1>Filtros São João</h1>
+                    <p class="category-hero-text">A linha completa de filtros de barro São João, da Cerâmica Stéfani. Do modelo tradicional aos filtros com vela Tripla Ação, em tamanhos de 4 a 10 litros.</p>
+                    <div class="category-hero-stats">
+                        <span>9 coleções</span>
+                        <div class="divider"></div>
+                        <span>De 4 a 10 litros</span>
+                        <div class="divider"></div>
+                        <span class="frete">Frete grátis para SP</span>
+                    </div>
+                </div>
+                <div class="category-hero-image">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/acquaterra_ambientado-a4ee959340edcfdeed17821803252689-1024-1024.webp" alt="Filtro de barro São João em ambiente" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Atalhos das coleções -->
+    <div class="container">
+        <div class="collection-pills">
+            <div class="collection-pills-inner">
+                <button class="pill active" data-collection="todas" onclick="filterByPill('todas')">Todas</button>
+                <button class="pill" data-collection="tradicional" onclick="filterByPill('tradicional')">Tradicional</button>
+                <button class="pill" data-collection="plus" onclick="filterByPill('plus')">Plus – Tripla Ação</button>
+                <button class="pill" data-collection="classic" onclick="filterByPill('classic')">Classic</button>
+                <button class="pill" data-collection="premium" onclick="filterByPill('premium')">Premium</button>
+                <button class="pill" data-collection="veneza" onclick="filterByPill('veneza')">Veneza</button>
+                <button class="pill" data-collection="advance" onclick="filterByPill('advance')">Advance Plus</button>
+                <button class="pill" data-collection="cristal" onclick="filterByPill('cristal')">Cristal Plus</button>
+                <button class="pill" data-collection="flex" onclick="filterByPill('flex')">Flex</button>
+                <button class="pill" data-collection="acquaterra" onclick="filterByPill('acquaterra')">Acquaterra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Área principal -->
+    <div class="container">
+        <!-- Botão de filtro mobile -->
+        <button class="mobile-filter-btn" onclick="toggleFilterPanel()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"/>
+            </svg>
+            Filtrar e ordenar
+        </button>
+
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Ordenar por</h4>
+                    <select id="sortSelect" onchange="applyFilters()">
+                        <option value="destaque">Destaque</option>
+                        <option value="preco-menor">Preço: menor ao maior</option>
+                        <option value="preco-maior">Preço: maior ao menor</option>
+                        <option value="a-z">A – Z</option>
+                        <option value="z-a">Z – A</option>
+                    </select>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Coleções</h4>
+                    <div class="checkbox-group" id="collectionFilters">
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="tradicional" onchange="syncFilters()">
+                            <span>Tradicional</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="plus" onchange="syncFilters()">
+                            <span>Plus – Tripla Ação</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="classic" onchange="syncFilters()">
+                            <span>Classic</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="premium" onchange="syncFilters()">
+                            <span>Premium</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="veneza" onchange="syncFilters()">
+                            <span>Veneza</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="advance" onchange="syncFilters()">
+                            <span>Advance Plus</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="cristal" onchange="syncFilters()">
+                            <span>Cristal Plus</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="flex" onchange="syncFilters()">
+                            <span>Flex</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="acquaterra" onchange="syncFilters()">
+                            <span>Acquaterra</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Capacidade</h4>
+                    <div class="checkbox-group" id="capacityFilters">
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="4L" onchange="applyFilters()">
+                            <span>4 litros</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="5L" onchange="applyFilters()">
+                            <span>5 litros</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="6L" onchange="applyFilters()">
+                            <span>6 litros</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="8L" onchange="applyFilters()">
+                            <span>8 litros</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" value="10L" onchange="applyFilters()">
+                            <span>10 litros</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Marca</h4>
+                    <p class="sidebar-brand">São João – Stéfani</p>
+                </div>
+
+                <button class="clear-filters" onclick="clearFilters()">Limpar filtros</button>
+            </aside>
+
+            <!-- Grade de produtos -->
+            <div class="products-area">
+                <div class="products-header">
+                    <span class="products-count">Mostrando <span id="productCount">9</span> coleções</span>
+                </div>
+                <div class="products-grid" id="productsGrid">
+                    <!-- Cards gerados via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Painel de filtros mobile -->
+    <div class="filter-panel" id="filterPanel">
+        <div class="filter-panel-header">
+            <h3>Filtrar e ordenar</h3>
+            <button class="filter-panel-close" onclick="toggleFilterPanel()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="filter-panel-content">
+            <div class="sidebar-section">
+                <h4 class="sidebar-title">Ordenar por</h4>
+                <select id="sortSelectMobile" onchange="syncSort('mobile')">
+                    <option value="destaque">Destaque</option>
+                    <option value="preco-menor">Preço: menor ao maior</option>
+                    <option value="preco-maior">Preço: maior ao menor</option>
+                    <option value="a-z">A – Z</option>
+                    <option value="z-a">Z – A</option>
+                </select>
+            </div>
+
+            <div class="sidebar-section">
+                <h4 class="sidebar-title">Coleções</h4>
+                <div class="checkbox-group" id="collectionFiltersMobile">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h4 class="sidebar-title">Capacidade</h4>
+                <div class="checkbox-group" id="capacityFiltersMobile">
+                    <!-- Gerado via JS -->
+                </div>
+            </div>
+        </div>
+        <div class="filter-panel-actions">
+            <button class="btn-clear" onclick="clearFilters(); toggleFilterPanel();">Limpar</button>
+            <button class="btn-apply" onclick="toggleFilterPanel()">Aplicar</button>
+        </div>
+    </div>
+
+    <!-- Guia de tamanhos -->
+    <section class="size-guide">
+        <div class="container">
+            <h2>Qual tamanho é ideal para sua casa?</h2>
+            <table class="size-table">
+                <tr>
+                    <td>4 a 5 litros</td>
+                    <td>1 a 2 pessoas</td>
+                </tr>
+                <tr>
+                    <td>6 litros</td>
+                    <td>2 a 3 pessoas</td>
+                </tr>
+                <tr>
+                    <td>8 a 10 litros</td>
+                    <td>4 pessoas ou mais</td>
+                </tr>
+            </table>
+            <p class="size-guide-help">Ficou em dúvida? <a href="https://wa.me/5516996077301">Fale com a gente no WhatsApp.</a></p>
+        </div>
+    </section>
+
+    <!-- Faixa de confiança -->
+    <section class="trust-bar">
+        <div class="container">
+            <div class="trust-bar-inner">
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+                    </svg>
+                    <div class="trust-item-text">
+                        <strong>Frete grátis</strong>
+                        <span>para todo o Estado de SP</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/>
+                    </svg>
+                    <div class="trust-item-text">
+                        <strong>Produtos originais</strong>
+                        <span>revendedor autorizado Stéfani</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+                    </svg>
+                    <div class="trust-item-text">
+                        <strong>Pagamento facilitado</strong>
+                        <span>Pix, boleto e cartões</span>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+                    </svg>
+                    <div class="trust-item-text">
+                        <strong>Atendimento no WhatsApp</strong>
+                        <span>(16) 99607-7301</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-inner">
+                <div class="newsletter-text">
+                    <h3>Receba nossas ofertas</h3>
+                    <p>Cadastre seu e-mail e fique por dentro das promoções.</p>
+                </div>
+                <form class="newsletter-form" onsubmit="return false;">
+                    <input type="email" placeholder="Seu e-mail" required>
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/themes/common/logo-2007118023-1588553096-2655ab607493ce340c375307e2c3ae891588553096-480-0.webp" alt="Filtro de Barro">
+                    <p>Revendedora autorizada da Cerâmica Stéfani.</p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Departamentos</h4>
+                    <nav class="footer-links">
+                        <a href="#">Filtros</a>
+                        <a href="#">Velas p/ Filtros</a>
+                        <a href="#">Acessórios p/ Filtros</a>
+                        <a href="#">Combos e Kits</a>
+                        <a href="#">Refil p/ Purificadores</a>
+                        <a href="#">Linha PET</a>
+                    </nav>
+                </div>
+                <div>
+                    <h4 class="footer-title">Atendimento</h4>
+                    <nav class="footer-links footer-contact">
+                        <a href="https://wa.me/5516996077301">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            (16) 99607-7301
+                        </a>
+                        <a href="mailto:vendas@filtrodebarro.com">vendas@filtrodebarro.com</a>
+                        <a href="https://instagram.com/filtrodebarro_">@filtrodebarro_</a>
+                        <a href="https://www.facebook.com/Filtro-de-Barro-2266749963378395/">Facebook</a>
+                    </nav>
+                </div>
+                <div>
+                    <h4 class="footer-title">Pagamento</h4>
+                    <div class="payment-icons">
+                        <span class="payment-icon">Pix</span>
+                        <span class="payment-icon">Boleto</span>
+                        <span class="payment-icon">Visa</span>
+                        <span class="payment-icon">Master</span>
+                        <span class="payment-icon">Elo</span>
+                        <span class="payment-icon">Amex</span>
+                        <span class="payment-icon">Hiper</span>
+                        <span class="payment-icon">Diners</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                Copyright Filtro de Barro – CNPJ 34.084.808/0001-16 – 2026. Todos os direitos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp flutuante -->
+    <a href="https://wa.me/5516996077301" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- Aviso de cookies -->
+    <div class="cookie-notice show" id="cookieNotice">
+        <div class="cookie-notice-inner">
+            <p>Ao navegar por este site você aceita o uso de cookies para agilizar a sua experiência de compra.</p>
+            <button onclick="closeCookieNotice()">Entendi</button>
+        </div>
+    </div>
+
+    <script>
+        // Dados das coleções
+        const collections = [
+            {
+                id: 'tradicional',
+                name: 'Tradicional',
+                description: 'O filtro de barro São João de sempre, com vela Stéfani.',
+                capacities: ['4L', '6L', '8L', '10L'],
+                price: 229.99,
+                badge: 'Mais vendido',
+                badgeType: 'default',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/filtro_trad_8l1-d31a577db9dbfe478816812384100373-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/tradicional1/'
+            },
+            {
+                id: 'plus',
+                name: 'Plus – Tripla Ação',
+                description: 'O tradicional com vela Tripla Ação e boia.',
+                capacities: ['4L', '6L', '8L', '10L'],
+                price: 259.99,
+                badge: 'Com boia',
+                badgeType: 'default',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-8-litros-vela-tripla-acao-3d1-7ff16fc752aa1f0f8d16896407528428-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/tradicional1/'
+            },
+            {
+                id: 'classic',
+                name: 'Classic',
+                description: 'Revestimento interno e externo que protege contra bactérias e poeira.',
+                capacities: ['5L', '6L', '8L'],
+                price: 274.99,
+                badge: 'Com boia',
+                badgeType: 'default',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/classic_6l1-74c2b85cfa7d7bd55d16812400978699-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/classic/'
+            },
+            {
+                id: 'premium',
+                name: 'Premium',
+                description: 'Mais velas e mais vazão para a família toda.',
+                capacities: ['4L', '6L', '8L', '10L'],
+                price: 229.99,
+                badge: null,
+                badgeType: null,
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/premium_8l1-f8b7fa514fc962cad316569748573066-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/premium1/'
+            },
+            {
+                id: 'veneza',
+                name: 'Veneza',
+                description: 'Linhas elegantes para cozinhas decoradas.',
+                capacities: ['6L', '8L'],
+                price: 269.99,
+                badge: null,
+                badgeType: null,
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/veneza_6l1-74bd188977fa9b3cbc16569750491281-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/veneza1/'
+            },
+            {
+                id: 'advance',
+                name: 'Advance Plus',
+                description: 'Reservatório transparente para ver o nível da água.',
+                capacities: ['4L', '6L', '8L'],
+                price: 249.99,
+                badge: null,
+                badgeType: null,
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/advance_transp_8l1-a62f4ed9cbdfa76efb16581823023002-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/advance/'
+            },
+            {
+                id: 'cristal',
+                name: 'Cristal Plus',
+                description: 'Acabamento brilhante e visual moderno.',
+                capacities: ['6L', '8L'],
+                price: 259.99,
+                badge: null,
+                badgeType: null,
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/cristal_plus6l1-0fa0d1898a9a4b0c0616579791872486-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/cristal/'
+            },
+            {
+                id: 'flex',
+                name: 'Flex',
+                description: 'Leve e prático, nas cores branco e azul.',
+                capacities: ['6L'],
+                price: 179.99,
+                badge: null,
+                badgeType: null,
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/flex_branco_2velas1-ad828009cf75ac30c116581824606227-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/flex1/'
+            },
+            {
+                id: 'acquaterra',
+                name: 'Acquaterra',
+                description: 'A linha mais sofisticada da Stéfani.',
+                capacities: ['5L', '6L'],
+                price: 999.99,
+                badge: 'Linha especial',
+                badgeType: 'special',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/acquaterra_ambientado2-925c0ee17fe015bcb617821716967472-1024-1024.webp',
+                link: 'https://www.filtrodebarro.com/filtros/sao-joao-stefani/acquaterra/'
+            }
+        ];
+
+        // Formatar preço
+        function formatPrice(price) {
+            return price.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Criar card de produto
+        function createProductCard(collection) {
+            const badgeHTML = collection.badge
+                ? `<span class="product-badge ${collection.badgeType === 'special' ? 'special' : ''}">${collection.badge}</span>`
+                : '';
+
+            const sizesHTML = collection.capacities.map(cap => `<span class="size-tag">${cap}</span>`).join('');
+
+            return `
+                <a href="${collection.link}" class="product-card" data-collection="${collection.id}" data-capacities="${collection.capacities.join(',')}" data-price="${collection.price}" data-name="${collection.name}">
+                    <div class="product-card-image">
+                        ${badgeHTML}
+                        <img src="${collection.image}" alt="Filtro ${collection.name}" loading="lazy">
+                    </div>
+                    <div class="product-card-content">
+                        <h3 class="product-card-title">${collection.name}</h3>
+                        <p class="product-card-description">${collection.description}</p>
+                        <div class="product-card-sizes">${sizesHTML}</div>
+                        <div class="product-card-price">
+                            <span class="price-label">a partir de</span>
+                            <span class="price-value">R$ ${formatPrice(collection.price)}</span>
+                        </div>
+                        <span class="product-card-link">Ver coleção →</span>
+                    </div>
+                </a>
+            `;
+        }
+
+        // Renderizar grade de produtos
+        function renderProducts(filteredCollections) {
+            const grid = document.getElementById('productsGrid');
+            const countEl = document.getElementById('productCount');
+
+            if (filteredCollections.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <p>Nenhuma coleção encontrada com esses filtros.</p>
+                        <button onclick="clearFilters()">Limpar filtros</button>
+                    </div>
+                `;
+                countEl.textContent = '0';
+            } else {
+                grid.innerHTML = filteredCollections.map(createProductCard).join('');
+                countEl.textContent = filteredCollections.length;
+            }
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            let filtered = [...collections];
+
+            // Filtro por coleção
+            const collectionChecks = document.querySelectorAll('#collectionFilters input:checked');
+            const selectedCollections = Array.from(collectionChecks).map(cb => cb.value);
+
+            if (selectedCollections.length > 0) {
+                filtered = filtered.filter(c => selectedCollections.includes(c.id));
+            }
+
+            // Filtro por capacidade
+            const capacityChecks = document.querySelectorAll('#capacityFilters input:checked');
+            const selectedCapacities = Array.from(capacityChecks).map(cb => cb.value);
+
+            if (selectedCapacities.length > 0) {
+                filtered = filtered.filter(c =>
+                    c.capacities.some(cap => selectedCapacities.includes(cap))
+                );
+            }
+
+            // Ordenação
+            const sortValue = document.getElementById('sortSelect').value;
+            switch (sortValue) {
+                case 'preco-menor':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'preco-maior':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'a-z':
+                    filtered.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+                    break;
+                case 'z-a':
+                    filtered.sort((a, b) => b.name.localeCompare(a.name, 'pt-BR'));
+                    break;
+            }
+
+            renderProducts(filtered);
+            updatePills();
+        }
+
+        // Filtrar por pill (atalho)
+        function filterByPill(collectionId) {
+            // Limpar checkboxes de coleção
+            document.querySelectorAll('#collectionFilters input').forEach(cb => {
+                cb.checked = false;
+            });
+
+            // Ativar pill
+            document.querySelectorAll('.pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+            document.querySelector(`.pill[data-collection="${collectionId}"]`).classList.add('active');
+
+            // Se não for "todas", marcar o checkbox correspondente
+            if (collectionId !== 'todas') {
+                const checkbox = document.querySelector(`#collectionFilters input[value="${collectionId}"]`);
+                if (checkbox) checkbox.checked = true;
+            }
+
+            applyFilters();
+        }
+
+        // Sincronizar filtros checkbox com pills
+        function syncFilters() {
+            applyFilters();
+        }
+
+        // Atualizar estado visual dos pills
+        function updatePills() {
+            const collectionChecks = document.querySelectorAll('#collectionFilters input:checked');
+            const selectedCollections = Array.from(collectionChecks).map(cb => cb.value);
+
+            document.querySelectorAll('.pill').forEach(pill => {
+                pill.classList.remove('active');
+            });
+
+            if (selectedCollections.length === 0) {
+                document.querySelector('.pill[data-collection="todas"]').classList.add('active');
+            } else if (selectedCollections.length === 1) {
+                const activePill = document.querySelector(`.pill[data-collection="${selectedCollections[0]}"]`);
+                if (activePill) activePill.classList.add('active');
+            }
+        }
+
+        // Limpar filtros
+        function clearFilters() {
+            document.querySelectorAll('#collectionFilters input, #capacityFilters input').forEach(cb => {
+                cb.checked = false;
+            });
+            document.getElementById('sortSelect').value = 'destaque';
+            document.getElementById('sortSelectMobile').value = 'destaque';
+
+            document.querySelectorAll('.pill').forEach(pill => pill.classList.remove('active'));
+            document.querySelector('.pill[data-collection="todas"]').classList.add('active');
+
+            applyFilters();
+        }
+
+        // Sincronizar ordenação entre desktop e mobile
+        function syncSort(source) {
+            const desktopSort = document.getElementById('sortSelect');
+            const mobileSort = document.getElementById('sortSelectMobile');
+
+            if (source === 'mobile') {
+                desktopSort.value = mobileSort.value;
+            } else {
+                mobileSort.value = desktopSort.value;
+            }
+
+            applyFilters();
+        }
+
+        // Toggle menu mobile
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.mobile-menu');
+            const overlay = document.querySelector('.mobile-overlay');
+            menu.classList.toggle('active');
+            overlay.classList.toggle('active');
+            overlay.style.display = overlay.classList.contains('active') ? 'block' : 'none';
+        }
+
+        // Toggle painel de filtros mobile
+        function toggleFilterPanel() {
+            const panel = document.getElementById('filterPanel');
+            const overlay = document.querySelector('.mobile-overlay');
+            panel.classList.toggle('active');
+            overlay.classList.toggle('active');
+            overlay.style.display = overlay.classList.contains('active') ? 'block' : 'none';
+        }
+
+        // Fechar aviso de cookies
+        function closeCookieNotice() {
+            document.getElementById('cookieNotice').classList.remove('show');
+            localStorage.setItem('cookieAccepted', 'true');
+        }
+
+        // Duplicar filtros para o painel mobile
+        function setupMobileFilters() {
+            const collectionFiltersMobile = document.getElementById('collectionFiltersMobile');
+            const capacityFiltersMobile = document.getElementById('capacityFiltersMobile');
+
+            const collectionLabels = [
+                { value: 'tradicional', label: 'Tradicional' },
+                { value: 'plus', label: 'Plus – Tripla Ação' },
+                { value: 'classic', label: 'Classic' },
+                { value: 'premium', label: 'Premium' },
+                { value: 'veneza', label: 'Veneza' },
+                { value: 'advance', label: 'Advance Plus' },
+                { value: 'cristal', label: 'Cristal Plus' },
+                { value: 'flex', label: 'Flex' },
+                { value: 'acquaterra', label: 'Acquaterra' }
+            ];
+
+            const capacityLabels = [
+                { value: '4L', label: '4 litros' },
+                { value: '5L', label: '5 litros' },
+                { value: '6L', label: '6 litros' },
+                { value: '8L', label: '8 litros' },
+                { value: '10L', label: '10 litros' }
+            ];
+
+            collectionFiltersMobile.innerHTML = collectionLabels.map(item => `
+                <label class="checkbox-item">
+                    <input type="checkbox" value="${item.value}" onchange="syncMobileFilter('collection', '${item.value}')">
+                    <span>${item.label}</span>
+                </label>
+            `).join('');
+
+            capacityFiltersMobile.innerHTML = capacityLabels.map(item => `
+                <label class="checkbox-item">
+                    <input type="checkbox" value="${item.value}" onchange="syncMobileFilter('capacity', '${item.value}')">
+                    <span>${item.label}</span>
+                </label>
+            `).join('');
+        }
+
+        // Sincronizar filtros mobile com desktop
+        function syncMobileFilter(type, value) {
+            const desktopSelector = type === 'collection' ? '#collectionFilters' : '#capacityFilters';
+            const mobileSelector = type === 'collection' ? '#collectionFiltersMobile' : '#capacityFiltersMobile';
+
+            const desktopCheckbox = document.querySelector(`${desktopSelector} input[value="${value}"]`);
+            const mobileCheckbox = document.querySelector(`${mobileSelector} input[value="${value}"]`);
+
+            if (desktopCheckbox && mobileCheckbox) {
+                desktopCheckbox.checked = mobileCheckbox.checked;
+            }
+
+            applyFilters();
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar cookie
+            if (localStorage.getItem('cookieAccepted')) {
+                document.getElementById('cookieNotice').classList.remove('show');
+            }
+
+            // Configurar filtros mobile
+            setupMobileFilters();
+
+            // Renderizar produtos
+            renderProducts(collections);
+        });
+    </script>
+</body>
+</html>

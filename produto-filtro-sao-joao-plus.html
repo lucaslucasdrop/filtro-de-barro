@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro São João Plus – Tripla Ação | Filtro de Barro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #2B2420;
+            background: #FFFCF8;
+            line-height: 1.5;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header simples */
+        .top-bar {
+            background: #9A3F1C;
+            color: #fff;
+            text-align: center;
+            padding: 8px;
+            font-size: 13px;
+        }
+
+        .header {
+            background: #FFFCF8;
+            border-bottom: 1px solid #E8DDD1;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo img { height: 38px; }
+
+        .nav { display: flex; gap: 28px; }
+        .nav a { font-size: 14px; font-weight: 500; }
+        .nav a:hover { color: #C4572A; }
+
+        .header-icons { display: flex; gap: 16px; }
+        .header-icons a {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .header-icons a:hover { background: #F6EFE6; }
+        .header-icons svg { width: 20px; height: 20px; }
+
+        .cart-badge {
+            position: relative;
+        }
+        .cart-badge span {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #C4572A;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 600;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: 16px 0;
+            font-size: 13px;
+            color: #6E625A;
+        }
+        .breadcrumb a:hover { text-decoration: underline; }
+
+        /* Produto */
+        .product {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            padding: 20px 0 60px;
+        }
+
+        /* Galeria simples */
+        .gallery-main {
+            background: #F6EFE6;
+            border-radius: 6px;
+            padding: 40px;
+            margin-bottom: 12px;
+        }
+        .gallery-main img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+        }
+        .frete-tag {
+            display: inline-block;
+            background: #3F7A4A;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 3px;
+            margin-bottom: 12px;
+        }
+
+        .gallery-thumbs {
+            display: flex;
+            gap: 8px;
+        }
+        .gallery-thumb {
+            width: 70px;
+            height: 70px;
+            background: #F6EFE6;
+            border-radius: 4px;
+            padding: 6px;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        .gallery-thumb:hover, .gallery-thumb.active {
+            border-color: #C4572A;
+        }
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Info produto */
+        .product-info {
+            padding-top: 8px;
+        }
+
+        .product-brand {
+            font-size: 12px;
+            color: #C4572A;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .product-price {
+            margin-bottom: 24px;
+        }
+        .price-value {
+            font-size: 32px;
+            font-weight: 600;
+            color: #C4572A;
+        }
+        .price-installment {
+            font-size: 14px;
+            color: #6E625A;
+            margin-top: 4px;
+        }
+
+        /* Variantes */
+        .variants {
+            margin-bottom: 24px;
+        }
+        .variants-label {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .variants-label span {
+            font-weight: 400;
+            color: #6E625A;
+        }
+        .variant-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .variant-btn {
+            padding: 12px 20px;
+            border: 1px solid #E8DDD1;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            text-align: center;
+        }
+        .variant-btn:hover {
+            border-color: #C4572A;
+        }
+        .variant-btn.active {
+            border-color: #C4572A;
+            background: #FDF8F5;
+        }
+        .variant-btn strong {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .variant-btn small {
+            font-size: 12px;
+            color: #6E625A;
+        }
+
+        /* Comprar */
+        .buy-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .qty-box {
+            display: flex;
+            border: 1px solid #E8DDD1;
+            border-radius: 4px;
+        }
+        .qty-btn {
+            width: 40px;
+            height: 44px;
+            border: none;
+            background: none;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .qty-btn:hover { background: #F6EFE6; }
+        .qty-input {
+            width: 40px;
+            height: 44px;
+            border: none;
+            text-align: center;
+            font-family: inherit;
+            font-size: 15px;
+        }
+        .buy-btn {
+            flex: 1;
+            height: 44px;
+            background: #C4572A;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .buy-btn:hover { background: #9A3F1C; }
+
+        /* Frete */
+        .shipping-box {
+            border: 1px solid #E8DDD1;
+            border-radius: 4px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .shipping-box label {
+            font-size: 13px;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .shipping-row {
+            display: flex;
+            gap: 8px;
+        }
+        .shipping-row input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #E8DDD1;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        .shipping-row button {
+            padding: 10px 16px;
+            background: #2B2420;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .shipping-result {
+            margin-top: 12px;
+            padding: 12px;
+            background: #F6EFE6;
+            border-radius: 4px;
+            font-size: 13px;
+            display: none;
+        }
+        .shipping-result.show { display: block; }
+        .shipping-result strong { color: #3F7A4A; }
+
+        /* Info rápida */
+        .quick-info {
+            font-size: 13px;
+            color: #6E625A;
+            line-height: 1.8;
+        }
+        .quick-info svg {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            margin-right: 6px;
+            color: #3F7A4A;
+        }
+
+        /* Descrição */
+        .description {
+            border-top: 1px solid #E8DDD1;
+            margin-top: 60px;
+            padding-top: 40px;
+        }
+        .desc-title {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+        .desc-text {
+            font-size: 14px;
+            color: #6E625A;
+            max-width: 700px;
+            line-height: 1.7;
+        }
+        .desc-text p { margin-bottom: 12px; }
+
+        /* Tabela specs */
+        .specs {
+            margin-top: 40px;
+        }
+        .specs table {
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .specs th, .specs td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #E8DDD1;
+        }
+        .specs th {
+            background: #F6EFE6;
+            font-weight: 600;
+        }
+        .specs tr.selected td {
+            background: #FDF8F5;
+            font-weight: 500;
+        }
+
+        /* O que vem */
+        .box-contents {
+            margin-top: 40px;
+        }
+        .box-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .box-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: #F6EFE6;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .box-item strong {
+            background: #C4572A;
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2B2420;
+            color: #F6EFE6;
+            padding: 48px 0 24px;
+            margin-top: 80px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        .footer-logo img {
+            height: 32px;
+            filter: brightness(0) invert(1);
+            margin-bottom: 12px;
+        }
+        .footer-logo p {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+        .footer h4 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 13px;
+        }
+        .footer-links a { opacity: 0.7; }
+        .footer-links a:hover { opacity: 1; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 24px;
+            text-align: center;
+            font-size: 12px;
+            opacity: 0.5;
+        }
+
+        /* WhatsApp */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 52px;
+            height: 52px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 40;
+        }
+        .whatsapp-btn svg { width: 26px; height: 26px; fill: #fff; }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .product {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .nav { display: none; }
+            .product-title { font-size: 24px; }
+            .price-value { font-size: 28px; }
+            .variant-btns { flex-wrap: wrap; }
+            .variant-btn { flex: 1; min-width: 70px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        Frete grátis para todo o Estado de SP · Revendedor autorizado Cerâmica Stéfani
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="https://www.filtrodebarro.com/" class="logo">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/themes/common/logo-2007118023-1588553096-2655ab607493ce340c375307e2c3ae891588553096-480-0.webp" alt="Filtro de Barro">
+                </a>
+                <nav class="nav">
+                    <a href="https://www.filtrodebarro.com/">Início</a>
+                    <a href="https://www.filtrodebarro.com/produtos/">Produtos</a>
+                    <a href="https://www.filtrodebarro.com/contato/">Contato</a>
+                </nav>
+                <div class="header-icons">
+                    <a href="#">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </a>
+                    <a href="#" class="cart-badge">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                        <span>0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="/">Início</a> ›
+            <a href="/filtros/">Filtros</a> ›
+            <a href="/filtros/sao-joao-stefani/">São João – Stéfani</a> ›
+            Filtro São João Plus
+        </nav>
+
+        <div class="product">
+            <div class="gallery">
+                <span class="frete-tag">Frete grátis SP</span>
+                <div class="gallery-main">
+                    <img id="mainImage" src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-4-litros-vela-tripla-acao-3d1-4b96cb3b9557f5a9de16896408362460-1024-1024.webp" alt="Filtro São João Plus">
+                </div>
+                <div class="gallery-thumbs">
+                    <button class="gallery-thumb active" onclick="setThumb(this, 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-4-litros-vela-tripla-acao-3d1-4b96cb3b9557f5a9de16896408362460-1024-1024.webp')">
+                        <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-4-litros-vela-tripla-acao-3d1-4b96cb3b9557f5a9de16896408362460-1024-1024.webp" alt="">
+                    </button>
+                    <button class="gallery-thumb" onclick="setThumb(this, 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/vela-tripla-acao41-e8388051e11e03ecfa16896405307226-1024-1024.webp')">
+                        <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/vela-tripla-acao41-e8388051e11e03ecfa16896405307226-1024-1024.webp" alt="">
+                    </button>
+                    <button class="gallery-thumb" onclick="setThumb(this, 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/embalagem_torneira_marrom1-fe2696dd6c66843ed616896400733530-1024-1024.webp')">
+                        <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/embalagem_torneira_marrom1-fe2696dd6c66843ed616896400733530-1024-1024.webp" alt="">
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-info">
+                <p class="product-brand">CERÂMICA STÉFANI</p>
+                <h1 class="product-title">Filtro São João Plus – Tripla Ação</h1>
+
+                <div class="product-price">
+                    <span class="price-value" id="price">R$ 259,99</span>
+                    <p class="price-installment">em até <strong id="installment">3x de R$ 86,66</strong> sem juros</p>
+                </div>
+
+                <div class="variants">
+                    <p class="variants-label">Tamanho: <span id="sizeLabel">4 litros</span></p>
+                    <div class="variant-btns" id="variantBtns"></div>
+                </div>
+
+                <div class="buy-row">
+                    <div class="qty-box">
+                        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+                        <input type="number" class="qty-input" id="qty" value="1" min="1">
+                        <button class="qty-btn" onclick="changeQty(1)">+</button>
+                    </div>
+                    <button class="buy-btn">Comprar</button>
+                </div>
+
+                <div class="shipping-box">
+                    <label>Calcular frete e prazo</label>
+                    <div class="shipping-row">
+                        <input type="text" id="cep" placeholder="00000-000" maxlength="9">
+                        <button onclick="calcFrete()">Calcular</button>
+                    </div>
+                    <div class="shipping-result" id="freteResult">
+                        <strong>Frete grátis</strong> – PAC (5 a 8 dias úteis)
+                    </div>
+                </div>
+
+                <div class="quick-info">
+                    <p>
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Produto original Cerâmica Stéfani
+                    </p>
+                    <p>
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Inclui vela Tripla Ação e boia
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="description">
+            <h2 class="desc-title">Descrição</h2>
+            <div class="desc-text">
+                <p>O Filtro São João é um ícone dos lares brasileiros. Este modelo Plus vem com a Vela Tripla Ação, que elimina bactérias e impurezas da água, e boia reguladora de nível.</p>
+                <p>Fabricado pela Cerâmica Stéfani desde 1947, o filtro de barro mantém a água naturalmente fresca e com sabor puro.</p>
+            </div>
+
+            <div class="specs">
+                <h3 class="desc-title">Especificações</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tamanho</th>
+                            <th>Velas</th>
+                            <th>Altura</th>
+                            <th>Diâmetro</th>
+                            <th>Peso</th>
+                        </tr>
+                    </thead>
+                    <tbody id="specsBody"></tbody>
+                </table>
+            </div>
+
+            <div class="box-contents">
+                <h3 class="desc-title">O que vem na caixa</h3>
+                <div class="box-list" id="boxList"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-logo">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/themes/common/logo-2007118023-1588553096-2655ab607493ce340c375307e2c3ae891588553096-480-0.webp" alt="Filtro de Barro">
+                    <p>Revendedora autorizada da Cerâmica Stéfani.</p>
+                </div>
+                <div>
+                    <h4>Departamentos</h4>
+                    <nav class="footer-links">
+                        <a href="#">Filtros</a>
+                        <a href="#">Velas p/ Filtros</a>
+                        <a href="#">Acessórios</a>
+                        <a href="#">Combos e Kits</a>
+                    </nav>
+                </div>
+                <div>
+                    <h4>Atendimento</h4>
+                    <nav class="footer-links">
+                        <a href="https://wa.me/5516996077301">(16) 99607-7301</a>
+                        <a href="mailto:vendas@filtrodebarro.com">vendas@filtrodebarro.com</a>
+                        <a href="https://instagram.com/filtrodebarro_">@filtrodebarro_</a>
+                    </nav>
+                </div>
+                <div>
+                    <h4>Pagamento</h4>
+                    <p style="font-size: 13px; opacity: 0.7;">Pix, Boleto, Visa, Mastercard, Elo, Amex, Hipercard</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                © 2026 Filtro de Barro – CNPJ 34.084.808/0001-16
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/5516996077301" class="whatsapp-btn" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script>
+        // DADOS DAS VARIANTES - EDITE AQUI
+        const variants = [
+            {
+                id: '4L',
+                label: '4 litros',
+                short: '4L',
+                velas: 1,
+                boias: 1,
+                price: 259.99,
+                height: '45 cm',
+                diameter: '22 cm',
+                weight: '7,1 kg',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-4-litros-vela-tripla-acao-3d1-4b96cb3b9557f5a9de16896408362460-1024-1024.webp'
+            },
+            {
+                id: '6L',
+                label: '6 litros',
+                short: '6L',
+                velas: 1,
+                boias: 1,
+                price: 279.99,
+                height: '58 cm',
+                diameter: '24 cm',
+                weight: '9,0 kg',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-6-litros-vela-tripla-acao-3d1-f632a34746a6f505df16896407948423-1024-1024.webp'
+            },
+            {
+                id: '8L',
+                label: '8 litros',
+                short: '8L',
+                velas: 2,
+                boias: 2,
+                price: 299.99,
+                height: '62 cm',
+                diameter: '26 cm',
+                weight: '11,6 kg',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-8-litros-vela-tripla-acao-3d1-7ff16fc752aa1f0f8d16896407528428-1024-1024.webp'
+            },
+            {
+                id: '10L',
+                label: '10 litros',
+                short: '10L',
+                velas: 3,
+                boias: 3,
+                price: 379.99,
+                height: '66 cm',
+                diameter: '28 cm',
+                weight: '14,1 kg',
+                image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-10-litros-vela-tripla-acao-3d1-97c5a61c93f835d19016896407049254-1024-1024.webp'
+            }
+        ];
+
+        let selected = variants[0];
+
+        function formatPrice(n) {
+            return n.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        }
+
+        function renderVariants() {
+            const container = document.getElementById('variantBtns');
+            container.innerHTML = variants.map(v => `
+                <button class="variant-btn ${v.id === selected.id ? 'active' : ''}" onclick="selectVariant('${v.id}')">
+                    <strong>${v.short}</strong>
+                    <small>${v.velas} vela${v.velas > 1 ? 's' : ''}</small>
+                </button>
+            `).join('');
+        }
+
+        function renderSpecs() {
+            const tbody = document.getElementById('specsBody');
+            tbody.innerHTML = variants.map(v => `
+                <tr class="${v.id === selected.id ? 'selected' : ''}">
+                    <td>${v.short}</td>
+                    <td>${v.velas}</td>
+                    <td>${v.height}</td>
+                    <td>${v.diameter}</td>
+                    <td>${v.weight}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderBox() {
+            const list = document.getElementById('boxList');
+            list.innerHTML = `
+                <div class="box-item"><strong>1</strong> Filtro de barro ${selected.label}</div>
+                <div class="box-item"><strong>${selected.velas}</strong> Vela${selected.velas > 1 ? 's' : ''} Tripla Ação</div>
+                <div class="box-item"><strong>${selected.boias}</strong> Boia${selected.boias > 1 ? 's' : ''}</div>
+                <div class="box-item"><strong>1</strong> Torneira</div>
+            `;
+        }
+
+        function selectVariant(id) {
+            selected = variants.find(v => v.id === id);
+            document.getElementById('price').textContent = 'R$ ' + formatPrice(selected.price);
+            document.getElementById('installment').textContent = '3x de R$ ' + formatPrice(selected.price / 3);
+            document.getElementById('sizeLabel').textContent = selected.label;
+            document.getElementById('mainImage').src = selected.image;
+            renderVariants();
+            renderSpecs();
+            renderBox();
+        }
+
+        function setThumb(el, src) {
+            document.getElementById('mainImage').src = src;
+            document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function changeQty(d) {
+            const input = document.getElementById('qty');
+            let v = parseInt(input.value) + d;
+            if (v < 1) v = 1;
+            if (v > 10) v = 10;
+            input.value = v;
+        }
+
+        function calcFrete() {
+            const cep = document.getElementById('cep').value;
+            if (cep.length >= 8) {
+                document.getElementById('freteResult').classList.add('show');
+            }
+        }
+
+        // Init
+        renderVariants();
+        renderSpecs();
+        renderBox();
+    </script>
+</body>
+</html>

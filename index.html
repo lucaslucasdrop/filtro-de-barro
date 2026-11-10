@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro de Barro | Revendedor Autorizado Cerâmica Stéfani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #B8472A;
+            --primary-hover: #9A3A22;
+            --bg: #FFFFFF;
+            --gray-50: #F9F9F9;
+            --gray-100: #F3F3F3;
+            --gray-200: #E5E5E5;
+            --gray-300: #D1D1D1;
+            --gray-400: #999;
+            --gray-600: #666;
+            --gray-800: #333;
+            --green: #2E8B57;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--gray-800);
+            background: var(--bg);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+        button { font-family: inherit; cursor: pointer; }
+
+        /* Header simples */
+        .header {
+            background: #fff;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--gray-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo img { height: 40px; }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-link {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+        .cart-link {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 13px;
+            color: var(--gray-800);
+            font-weight: 500;
+        }
+        .cart-link svg { width: 18px; height: 18px; }
+
+        /* Faixa frete */
+        .shipping-bar {
+            background: linear-gradient(90deg, #2E8B57 0%, #3AA06A 100%);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+        .shipping-bar::before {
+            content: '✓ ';
+        }
+
+        /* Container */
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* Produto */
+        .product {
+            padding: 16px 0 32px;
+        }
+
+        /* Imagem */
+        .product-image {
+            background: linear-gradient(145deg, #F8F6F4 0%, #EFEBE7 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .product-image img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+        .product-image:hover img {
+            transform: scale(1.03);
+        }
+
+        /* Miniaturas */
+        .product-thumbs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        .thumb {
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            background: var(--gray-50);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .thumb:hover {
+            border-color: var(--gray-300);
+            transform: translateY(-2px);
+        }
+        .thumb.active {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(184,71,42,0.2);
+        }
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Info */
+        .sold-info {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .product-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.35;
+            color: var(--gray-800);
+        }
+        .product-sku {
+            font-size: 12px;
+            color: var(--gray-400);
+            margin-bottom: 8px;
+        }
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding: 8px 0;
+        }
+        .product-rating-stars {
+            color: #F59E0B;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        .product-rating-score {
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--gray-800);
+        }
+        .product-rating-count {
+            font-size: 13px;
+            color: var(--gray-400);
+        }
+        .product-rating-count a {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Variantes */
+        .variants-label {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-bottom: 10px;
+        }
+        .variants {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .variant-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 2px solid var(--gray-200);
+            background: #fff;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-800);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .variant-btn:hover {
+            border-color: var(--gray-400);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        .variant-btn.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #FFF8F6 0%, #FFF 100%);
+            box-shadow: 0 4px 12px rgba(184,71,42,0.15);
+        }
+        .variant-img {
+            width: 44px;
+            height: 44px;
+            background: var(--gray-50);
+            border-radius: 6px;
+            padding: 4px;
+            overflow: hidden;
+        }
+        .variant-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .variant-info {
+            text-align: left;
+        }
+        .variant-size {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .variant-price {
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Preço */
+        .price-box {
+            margin-bottom: 20px;
+            padding: 16px;
+            background: linear-gradient(135deg, #FFFAF8 0%, #FFF5F2 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(184,71,42,0.1);
+        }
+        .price {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .installments {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-top: 4px;
+        }
+        .installments strong {
+            color: var(--gray-800);
+        }
+        .stock-info {
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--green);
+            font-weight: 500;
+        }
+
+        /* Comprar */
+        .buy-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .qty {
+            display: flex;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .qty button {
+            width: 44px;
+            height: 48px;
+            border: none;
+            background: var(--gray-50);
+            font-size: 18px;
+            color: var(--gray-600);
+            transition: all 0.15s ease;
+        }
+        .qty button:hover {
+            background: var(--gray-200);
+            color: var(--gray-800);
+        }
+        .qty button:active {
+            background: var(--gray-300);
+        }
+        .qty input {
+            width: 48px;
+            height: 48px;
+            border: none;
+            text-align: center;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        .buy-btn {
+            flex: 1;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(184,71,42,0.3);
+        }
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(184,71,42,0.4);
+        }
+        .buy-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Info rápida */
+        .quick-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 16px 0;
+            margin-bottom: 20px;
+        }
+        .quick-info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--gray-600);
+            padding: 8px 12px;
+            background: var(--gray-50);
+            border-radius: 20px;
+        }
+        .quick-info-item svg {
+            width: 14px;
+            height: 14px;
+            color: var(--green);
+        }
+        .whatsapp-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: #F0FDF4;
+            border: 1px solid #BBF7D0;
+            border-radius: 8px;
+            color: #166534;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+        .whatsapp-link:hover {
+            background: #DCFCE7;
+        }
+        .whatsapp-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Descrição */
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--gray-800);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 18px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        .description {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #fff;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+        }
+        .description p {
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        /* Itens inclusos */
+        .included {
+            margin-bottom: 24px;
+        }
+        .included-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .included-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            background: linear-gradient(135deg, var(--gray-50) 0%, #fff 100%);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            font-size: 13px;
+            color: var(--gray-800);
+            transition: all 0.2s ease;
+        }
+        .included-item:hover {
+            border-color: var(--primary);
+            background: #FFF8F6;
+        }
+        .included-item span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 22px;
+            height: 22px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 11px;
+        }
+
+        /* Especificações */
+        .specs {
+            margin-bottom: 24px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 16px;
+        }
+        .specs .section-title {
+            margin-bottom: 16px;
+        }
+        .specs .section-title::before {
+            display: none;
+        }
+        .specs-table {
+            width: 100%;
+            font-size: 13px;
+        }
+        .specs-table tr {
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .specs-table tr:last-child {
+            border-bottom: none;
+        }
+        .specs-table td {
+            padding: 12px 0;
+        }
+        .specs-table td:first-child {
+            color: var(--gray-600);
+            width: 45%;
+        }
+        .specs-table td:last-child {
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+
+        /* Avaliações */
+        .reviews {
+            padding: 32px 0;
+            background: #fff;
+        }
+        .reviews .container {
+            max-width: 1200px;
+        }
+        .reviews-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .reviews-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .reviews-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+        .stars {
+            color: #F59E0B;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+        .reviews-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scroll-snap-type: x mandatory;
+        }
+        .review-card {
+            flex-shrink: 0;
+            width: 300px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            padding: 16px;
+            scroll-snap-align: start;
+        }
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .review-avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, #D4654A 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .review-info {
+            flex: 1;
+        }
+        .review-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--gray-800);
+        }
+        .review-date {
+            font-size: 11px;
+            color: var(--gray-400);
+        }
+        .review-stars {
+            color: #F59E0B;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+        .review-text {
+            font-size: 13px;
+            color: var(--gray-600);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        .review-images {
+            display: flex;
+            gap: 8px;
+        }
+        .review-img {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .review-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Coleções */
+        .collections {
+            background: linear-gradient(180deg, var(--gray-50) 0%, #fff 100%);
+            padding: 32px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+        .collections .container {
+            max-width: 1200px;
+        }
+        .collections-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .collections-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--gray-300);
+        }
+        .collections-grid {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+        }
+        .collection-item {
+            flex-shrink: 0;
+            width: 140px;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--gray-200);
+            transition: all 0.25s ease;
+        }
+        .collection-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+            border-color: transparent;
+        }
+        .collection-item img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: contain;
+            background: linear-gradient(145deg, #F8F6F4 0%, #EFEBE7 100%);
+            padding: 12px;
+            transition: transform 0.3s ease;
+        }
+        .collection-item:hover img {
+            transform: scale(1.05);
+        }
+        .collection-item-info {
+            padding: 12px;
+        }
+        .collection-item-name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--gray-800);
+        }
+        .collection-item-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-800);
+            color: #fff;
+            padding: 32px 16px;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+        .footer-logo img {
+            height: 24px;
+            filter: brightness(0) invert(1);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        .footer-col h4 {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.5;
+            margin-bottom: 12px;
+        }
+        .footer-col a, .footer-col p {
+            display: block;
+            font-size: 13px;
+            opacity: 0.8;
+            margin-bottom: 6px;
+        }
+        .footer-bottom {
+            font-size: 11px;
+            opacity: 0.4;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Desktop */
+        @media (min-width: 768px) {
+            .container { max-width: 1200px; }
+            .product > .container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+            }
+            .product-gallery { position: sticky; top: 80px; }
+            .product-title { font-size: 22px; }
+            .collections-grid {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                overflow: visible;
+            }
+            .collection-item { width: auto; }
+            .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/themes/common/logo-2007118023-1588553096-2655ab607493ce340c375307e2c3ae891588553096-480-0.webp" alt="Filtro de Barro">
+            </a>
+            <div class="header-right">
+                <a href="#" class="header-link">Contato</a>
+                <a href="#" class="cart-link">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    Carrinho
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="product">
+        <div class="container">
+            <div class="product-gallery">
+                <div class="product-image">
+                    <img id="mainImg" src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-4-litros-vela-tripla-acao-3d1-4b96cb3b9557f5a9de16896408362460-1024-1024.webp" alt="Filtro São João">
+                </div>
+                <div class="product-thumbs" id="thumbs"></div>
+            </div>
+
+            <div class="product-info">
+                <p class="sold-info">32 vendidos esta semana</p>
+                <h1 class="product-title">Filtro de Barro São João</h1>
+                <div class="product-rating">
+                    <span class="product-rating-stars">★★★★★</span>
+                    <span class="product-rating-score">4.9</span>
+                    <span class="product-rating-count">(<a href="#avaliacoes">183 avaliações</a>)</span>
+                </div>
+
+                <p class="variants-label">Tamanho:</p>
+                <div class="variants" id="variants"></div>
+
+                <div class="price-box">
+                    <div class="price" id="price">R$ 79,90</div>
+                    <div class="stock-info">Pronta entrega · Envio em 24h</div>
+                </div>
+
+                <div class="buy-section">
+                    <div class="qty">
+                        <button onclick="changeQty(-1)">−</button>
+                        <input type="text" id="qty" value="1" readonly>
+                        <button onclick="changeQty(1)">+</button>
+                    </div>
+                    <button class="buy-btn" onclick="addToCart()">Comprar agora</button>
+                </div>
+
+                <div class="quick-info">
+                    <div class="quick-info-item">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Produto original
+                    </div>
+                    <div class="quick-info-item">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Frete grátis
+                    </div>
+                    <div class="quick-info-item">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                        Garantia 90 dias
+                    </div>
+                </div>
+
+                
+                <div class="description">
+                    <h3 class="section-title">Descrição</h3>
+                    <p>O Filtro São João é um clássico da Cerâmica Stéfani, fabricado desde 1947. A versão Plus acompanha a Vela Tripla Ação, que elimina 99,9% das bactérias, além de boia reguladora de nível para manter a água sempre fresca.</p>
+                </div>
+
+                <div class="included">
+                    <h3 class="section-title">Itens inclusos</h3>
+                    <div class="included-list" id="includedList"></div>
+                </div>
+
+                <div class="specs">
+                    <h3 class="section-title">Especificações</h3>
+                    <table class="specs-table">
+                        <tbody id="specsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Avaliações -->
+    <section class="reviews" id="avaliacoes">
+        <div class="container">
+            <div class="reviews-header">
+                <h2 class="reviews-title">Avaliações de clientes</h2>
+                <div class="reviews-rating">
+                    <span class="stars">★★★★★</span>
+                    <span>4.9 (183 avaliações)</span>
+                </div>
+            </div>
+            <div class="reviews-scroll">
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">M</div>
+                        <div class="review-info">
+                            <div class="review-name">Maria S.</div>
+                            <div class="review-date">Novembro 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Simplesmente perfeito! Muitíssimo bem embalado, chegou rápido e exatamente conforme anunciado! Estou muito feliz com meu filtro de barro!!!</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/1.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">A</div>
+                        <div class="review-info">
+                            <div class="review-name">Ana Paula</div>
+                            <div class="review-date">Outubro 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Estou deslumbrada com minha compra, serviço de entrega perfeito, tudo certinho e bem embalado. Amei meu filtro, comprem sem medo de errar. E o custo benefício muito bom.</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/2.jpg" alt="Avaliação" class="review-img">
+                        <img src="img/avaliacoes/3.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">C</div>
+                        <div class="review-info">
+                            <div class="review-name">Carlos R.</div>
+                            <div class="review-date">Outubro 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Muito feliz com minha compra!! É bem do jeitinho que eu esperava, o vendedor foi bem rápido na postagem. Chegou antes do previsto!</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/4.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">J</div>
+                        <div class="review-info">
+                            <div class="review-name">Juliana M.</div>
+                            <div class="review-date">Setembro 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Essa é a melhor marca de filtro, veio muito bem embalado, em duas caixas e caixas de ovos em volta para proteger. A entrega foi no prazo!</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/5.jpg" alt="Avaliação" class="review-img">
+                        <img src="img/avaliacoes/6.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">R</div>
+                        <div class="review-info">
+                            <div class="review-name">Roberto F.</div>
+                            <div class="review-date">Setembro 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Filtro chegou dentro do prazo, bem embalado com todo o cuidado para não quebrar. Podem comprar sem medo, super indico e compraria novamente!</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/7.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">L</div>
+                        <div class="review-info">
+                            <div class="review-name">Luciana T.</div>
+                            <div class="review-date">Agosto 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Chegou rápido, veio tudo certo. Dentro de uma caixa do próprio filtro e dentro de outra maior com várias placas de ovo para proteger. Não quebrou!</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">P</div>
+                        <div class="review-info">
+                            <div class="review-name">Pedro H.</div>
+                            <div class="review-date">Agosto 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Excelente produto. Veio bem embalado e com qualidade dos filtros São João. Eu recomendo!</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/8.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">F</div>
+                        <div class="review-info">
+                            <div class="review-name">Fernanda L.</div>
+                            <div class="review-date">Julho 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Veio tudo certinho! Filtro de 10 litros perfeito para minha família. Muito bem embalado com proteção de caixa de ovo.</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/9.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">T</div>
+                        <div class="review-info">
+                            <div class="review-name">Thiago M.</div>
+                            <div class="review-date">Julho 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Já está instalado na cozinha! Água geladinha e pura. Melhor compra que fiz. Recomendo demais!</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/10.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="review-avatar">S</div>
+                        <div class="review-info">
+                            <div class="review-name">Sandra R.</div>
+                            <div class="review-date">Junho 2024</div>
+                        </div>
+                        <div class="review-stars">★★★★★</div>
+                    </div>
+                    <p class="review-text">Lindo demais! Combinou perfeitamente com minha cozinha. Água fresquinha o dia todo. Super satisfeita!</p>
+                    <div class="review-images">
+                        <img src="img/avaliacoes/11.jpg" alt="Avaliação" class="review-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="collections">
+        <div class="container">
+            <h2 class="collections-title">Veja também</h2>
+            <div class="collections-grid">
+                <a href="#" class="collection-item">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/filtro_trad_8l1-d31a577db9dbfe478816812384100373-1024-1024.webp" alt="Tradicional">
+                    <div class="collection-item-info">
+                        <div class="collection-item-name">São João Tradicional</div>
+                        <div class="collection-item-price">R$ 69,90</div>
+                    </div>
+                </a>
+                <a href="#" class="collection-item">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/classic_6l1-74c2b85cfa7d7bd55d16812400978699-1024-1024.webp" alt="Classic">
+                    <div class="collection-item-info">
+                        <div class="collection-item-name">São João Classic</div>
+                        <div class="collection-item-price">R$ 89,90</div>
+                    </div>
+                </a>
+                <a href="#" class="collection-item">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/veneza_6l1-74bd188977fa9b3cbc16569750491281-1024-1024.webp" alt="Veneza">
+                    <div class="collection-item-info">
+                        <div class="collection-item-name">Veneza</div>
+                        <div class="collection-item-price">R$ 99,90</div>
+                    </div>
+                </a>
+                <a href="#" class="collection-item">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/vela-tripla-acao41-e8388051e11e03ecfa16896405307226-1024-1024.webp" alt="Vela">
+                    <div class="collection-item-info">
+                        <div class="collection-item-name">Vela Tripla Ação</div>
+                        <div class="collection-item-price">R$ 29,90</div>
+                    </div>
+                </a>
+                <a href="#" class="collection-item">
+                    <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/products/embalagem_torneira_marrom1-fe2696dd6c66843ed616896400733530-1024-1024.webp" alt="Torneira">
+                    <div class="collection-item-info">
+                        <div class="collection-item-name">Torneira de Reposição</div>
+                        <div class="collection-item-price">R$ 14,90</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="https://acdn-us.mitiendanube.com/stores/001/107/479/themes/common/logo-2007118023-1588553096-2655ab607493ce340c375307e2c3ae891588553096-480-0.webp" alt="Filtro de Barro">
+            </div>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Sobre</h4>
+                    <p>Revendedor autorizado Cerâmica Stéfani. Trabalhamos com filtros de barro originais desde 2018.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Produtos</h4>
+                    <a href="#">Filtros</a>
+                    <a href="#">Velas</a>
+                    <a href="#">Acessórios</a>
+                </div>
+                            </div>
+            <div class="footer-bottom">
+                © 2024 Filtro de Barro – CNPJ 34.084.808/0001-16
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const variants = [
+            { id: '4L', label: '4 litros', velas: 1, price: 79.90, height: '45 cm', weight: '7,1 kg', image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-4-litros-vela-tripla-acao-3d1-4b96cb3b9557f5a9de16896408362460-1024-1024.webp', url: 'https://seguro.outubrodablackfriday.shop/api/public/shopify?product=4115969174611&store=41159' },
+            { id: '6L', label: '6 litros', velas: 1, price: 87.90, height: '58 cm', weight: '9,0 kg', image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-6-litros-vela-tripla-acao-3d1-f632a34746a6f505df16896407948423-1024-1024.webp', url: 'https://seguro.outubrodablackfriday.shop/api/public/shopify?product=4115975923542&store=41159' },
+            { id: '8L', label: '8 litros', velas: 2, price: 97.99, height: '62 cm', weight: '11,6 kg', image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-8-litros-vela-tripla-acao-3d1-7ff16fc752aa1f0f8d16896407528428-1024-1024.webp', url: 'https://seguro.outubrodablackfriday.shop/api/public/shopify?product=4115915914394&store=41159' },
+            { id: '10L', label: '10 litros', velas: 3, price: 119.90, height: '66 cm', weight: '14,1 kg', image: 'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-10-litros-vela-tripla-acao-3d1-97c5a61c93f835d19016896407049254-1024-1024.webp', url: 'https://seguro.outubrodablackfriday.shop/api/public/shopify?product=4115962584534&store=41159' }
+        ];
+
+        const images = [
+            'https://acdn-us.mitiendanube.com/stores/001/107/479/products/tradicional-4-litros-vela-tripla-acao-3d1-4b96cb3b9557f5a9de16896408362460-1024-1024.webp',
+            'https://acdn-us.mitiendanube.com/stores/001/107/479/products/vela-tripla-acao41-e8388051e11e03ecfa16896405307226-1024-1024.webp',
+            'https://acdn-us.mitiendanube.com/stores/001/107/479/products/embalagem_torneira_marrom1-fe2696dd6c66843ed616896400733530-1024-1024.webp'
+        ];
+
+        let selected = variants[0];
+        let currentImg = 0;
+
+        function formatPrice(n) {
+            return n.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        }
+
+        function renderThumbs() {
+            const imgs = [selected.image, ...images.slice(1)];
+            document.getElementById('thumbs').innerHTML = imgs.map((img, i) =>
+                `<button class="thumb ${i === currentImg ? 'active' : ''}" onclick="setImg(${i}, '${img}')">
+                    <img src="${img}" alt="">
+                </button>`
+            ).join('');
+        }
+
+        function setImg(i, src) {
+            currentImg = i;
+            document.getElementById('mainImg').src = src;
+            renderThumbs();
+        }
+
+        function renderVariants() {
+            document.getElementById('variants').innerHTML = variants.map(v =>
+                `<button class="variant-btn ${v.id === selected.id ? 'active' : ''}" onclick="selectVariant('${v.id}')">
+                    <div class="variant-img"><img src="${v.image}" alt="${v.label}"></div>
+                    <div class="variant-info">
+                        <div class="variant-size">${v.label}</div>
+                        <div class="variant-price">R$ ${formatPrice(v.price)}</div>
+                    </div>
+                </button>`
+            ).join('');
+        }
+
+        function renderIncluded() {
+            document.getElementById('includedList').innerHTML = `
+                <div class="included-item"><span>1×</span> Filtro ${selected.label}</div>
+                <div class="included-item"><span>${selected.velas}×</span> Vela Tripla Ação</div>
+                <div class="included-item"><span>${selected.velas}×</span> Boia reguladora</div>
+                <div class="included-item"><span>1×</span> Torneira</div>
+            `;
+        }
+
+        function renderSpecs() {
+            document.getElementById('specsTable').innerHTML = `
+                <tr><td>Capacidade</td><td>${selected.label}</td></tr>
+                <tr><td>Quantidade de velas</td><td>${selected.velas}</td></tr>
+                <tr><td>Altura</td><td>${selected.height}</td></tr>
+                <tr><td>Peso</td><td>${selected.weight}</td></tr>
+                <tr><td>Material</td><td>Cerâmica</td></tr>
+            `;
+        }
+
+        function selectVariant(id) {
+            selected = variants.find(v => v.id === id);
+            document.getElementById('price').textContent = 'R$ ' + formatPrice(selected.price);
+            document.getElementById('installment').textContent = 'R$ ' + formatPrice(selected.price / 3);
+            document.getElementById('mainImg').src = selected.image;
+            currentImg = 0;
+            renderThumbs();
+            renderVariants();
+            renderIncluded();
+            renderSpecs();
+        }
+
+        function changeQty(d) {
+            const input = document.getElementById('qty');
+            let v = parseInt(input.value) + d;
+            if (v < 1) v = 1;
+            if (v > 10) v = 10;
+            input.value = v;
+        }
+
+        function addToCart() {
+            window.location.href = selected.url;
+        }
+
+        renderThumbs();
+        renderVariants();
+        renderIncluded();
+        renderSpecs();
+    </script>
+</body>
+</html>
